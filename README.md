@@ -14,13 +14,48 @@ This sample is intended to validate:
 * macOS
 * a JDK supported by the Compose Gradle plugin
 * the Compose Gradle plugin published to `mavenLocal()` as `9999.0.0-SNAPSHOT`
+* a local `compose-multiplatform` checkout that includes the macOS signing fixes from
+  [PR #5238](https://github.com/JetBrains/compose-multiplatform/pull/5238)
 
-If you are testing local changes from a checkout of `compose-multiplatform`:
+## Prepare the Compose plugin locally
+
+This sample is meant to be used against a local checkout of
+`compose-multiplatform` that contains the signing changes from PR `#5238`
+or newer.
+
+If needed, check out the PR branch in your `compose-multiplatform` clone:
+
+```bash
+cd ../compose-multiplatform
+gh pr checkout 5238
+```
+
+Then publish the Compose Gradle plugin locally:
 
 ```bash
 cd ../compose-multiplatform/gradle-plugins
 ./gradlew publishToMavenLocal
 ```
+
+## Run locally
+
+From the sample project directory:
+
+```bash
+./gradlew run
+```
+
+## Typical verification flow
+
+```bash
+./gradlew clean createDistributable
+./gradlew packagePkg
+```
+
+The generated artifacts are written to:
+
+* `build/compose/binaries/main/app`
+* `build/compose/binaries/main/pkg`
 
 ## Build unsigned artifacts
 
